@@ -27,13 +27,14 @@ void hammingDistance () {
 			printf("Missing input!");
 			break;
 		default:
-			printf("Nepchan is best chan");
+			printf("%d", retVal);
 	}
 	printf("\n");
 }
 
 int getHammingDistance (char *str1, char *str2) {
 	int val = 0;
+	int i;
 
 	if (!strlen(str1) || !strlen(str2)) {
 		return -2;
@@ -41,8 +42,12 @@ int getHammingDistance (char *str1, char *str2) {
 	if (strlen(str1) != strlen(str2)) {
 		return -1;
 	}
-	
-	printf("1: %s; 2: %s\n", str1, str2);
+
+	for (i=0; i<strlen(str1); i+=1) {
+		if(str1[i] != str2[i]) {
+			val+=1;
+		}
+	}
 
 	return val;
 }

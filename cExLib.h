@@ -12,7 +12,7 @@ int getSkew(char *str1, char *str2, int type);
 
 void getStrings () {
 	int maxLen = 100;	//defines max string length
-	int choice = 3;
+	int choice = 4;
 	int retVal;
 	int skip = 0;
 	char str1[maxLen], str2[maxLen];
@@ -154,6 +154,9 @@ int getSkew (char *str1, char *str2, int type) {
 	for (i=0; i<num; i+=1) {
 		if (str1[i] == 'G' || str1[i] == 'g') {
 			val+=1;
+		}
+		if (str1[i] == 'C' || str1[i] == 'c') {
+			val-=1;
 		}
 	}
 	return val;

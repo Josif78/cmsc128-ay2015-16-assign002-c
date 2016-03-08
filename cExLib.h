@@ -11,7 +11,7 @@ int isStringValid(char *str1, char *str2);
 
 void getStrings () {
 	int maxLen = 100;	//defines max string length
-	int choice = 1;
+	int choice = 3;
 	int retVal;
 	int skip = 0;
 	char str1[maxLen], str2[maxLen];
@@ -44,11 +44,16 @@ void getStrings () {
 			}
 			break;
 		case 3:
-			if (isStringValid(str1, str2)) {
-				printf("Valid\n");
-				break;
+			switch (isStringValid(str1, str2)) {
+				case -1:
+					printf("Missing input!");
+					break;
+				case 0:
+					printf("Invalid\n");
+					break;
+				default:
+					printf("Valid\n");
 			}
-			printf("Invalid\n");
 			break;
 		default:
 			printf("Nepu-nepu");
@@ -112,15 +117,23 @@ int getSubstrPattern (char *str1, char *str2) {
 	return val;
 }
 
-int getSubstrPattern (char *str1, char *str2) {
+int isStringValid (char *str1, char *str2) {
 	int i, j;
-
+	int check = 1;
+	
+	if (!strlen(str1) || !strlen(str2)) {
+		return -1;
+	}
 	for (i=0; i<strlen(str1); i+=1) {
 		for (j=0; j<strlen(str2); j+=1) {
-			if (str1[i] != str2[j]) {
-				return 0;
+			if (str1[i] == str2[j]) {
+				check = 0;
 			}
 		}
+		if (check) {
+			return 0;
+		}
+		check = 1;
 	}
 
 	return 1;

@@ -4,16 +4,16 @@
 
 	//function for inputs
 void getStrings();
-	//helper functions for printing results
-void hammingDistance(int retVal);
-void substrPattern(int retVal);
 	//main functions
 int getHammingDistance(char *str1, char *str2);
 int getSubstrPattern(char *str1, char *str2);
+int isStringValid(char *str1, char *str2);
 
 void getStrings () {
 	int maxLen = 100;	//defines max string length
-	int choice = 2;
+	int choice = 1;
+	int retVal;
+	int skip = 0;
 	char str1[maxLen], str2[maxLen];
 
 	printf("Input #1: ");
@@ -26,30 +26,38 @@ void getStrings () {
 
     switch (choice) {
     	case 1:
-			hammingDistance(getHammingDistance(str1, str2));
-			break;
+			retVal = getHammingDistance(str1, str2);
+			skip = 1;
 		case 2:
-			substrPattern(getSubstrPattern(str1, str2));
+			if (!skip) {
+				retVal = getSubstrPattern(str1, str2);
+			}
+			switch (retVal) {
+				case -1: 
+					printf("Missing input!");
+					break;
+				case -2:
+					printf("Error! String Lengths are not equal!");
+					break;
+				default:
+					printf("%d", retVal);
+			}
+			break;
+		case 3:
+			if (isStringValid(str1, str2)) {
+				printf("Valid\n");
+				break;
+			}
+			printf("Invalid\n");
 			break;
 		default:
-			printf("Nepu-nepu\n");
+			printf("Nepu-nepu");
     }
+    printf("\n");
+
+    skip = 0;
 }
 
-void hammingDistance (int retVal) {
-		//used switch case to check for error cases
-	switch (retVal) {
-		case -1: 
-			printf("Error! String Lengths are not equal!");
-			break;
-		case -2:
-			printf("Missing input!");
-			break;
-		default:
-			printf("%d", retVal);
-	}
-	printf("\n");
-}
 
 
 int getHammingDistance (char *str1, char *str2) {
@@ -57,33 +65,20 @@ int getHammingDistance (char *str1, char *str2) {
 	int i;
 
 	if (!strlen(str1) || !strlen(str2)) {
-		return -2;
+		return -1;
 	}
 	if (strlen(str1) != strlen(str2)) {
-		return -1;
+		return -2;
 	}
 
 	for (i=0; i<strlen(str1); i+=1) {
 		if(str1[i] != str2[i]) {
 			val+=1;
 		}
+		printf("\n");
 	}
 
 	return val;
-}
-
-
-
-void substrPattern (int retVal) {
-		//used switch case to check for error cases
-	switch (retVal) {
-		case -1:
-			printf("Missing input!");
-			break;
-		default:
-			printf("%d", retVal);
-	}
-	printf("\n");
 }
 
 int getSubstrPattern (char *str1, char *str2) {
@@ -115,4 +110,18 @@ int getSubstrPattern (char *str1, char *str2) {
 	}
 
 	return val;
+}
+
+int getSubstrPattern (char *str1, char *str2) {
+	int i, j;
+
+	for (i=0; i<strlen(str1); i+=1) {
+		for (j=0; j<strlen(str2); j+=1) {
+			if (str1[i] != str2[j]) {
+				return 0;
+			}
+		}
+	}
+
+	return 1;
 }

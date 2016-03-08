@@ -8,11 +8,10 @@ void getStrings();
 int getHammingDistance(char *str1, char *str2);
 int getSubstrPattern(char *str1, char *str2);
 int isStringValid(char *str1, char *str2);
-int getSkew(char *str1, char *str2, int type);
+int getTypeSkew(char *str1, char *str2, int type);
 
-void getStrings () {
+void getStrings (int choice) {
 	int maxLen = 100;	//defines max string length
-	int choice = 4;
 	int retVal;
 	int skip = 0;
 	char str1[maxLen], str2[maxLen];
@@ -65,7 +64,7 @@ void getStrings () {
 			case 6:
 				skip+=1;
 				if (1) {
-					printf("Value: %d", getSkew(str1, str2, skip));
+					printf("Value: %d", getTypeSkew(str1, str2, skip));
 				}
 				else {
 					printf("Invalid input");
@@ -94,7 +93,6 @@ int getHammingDistance (char *str1, char *str2) {
 		if(str1[i] != str2[i]) {
 			val+=1;
 		}
-		printf("\n");
 	}
 
 	return val;
@@ -146,8 +144,9 @@ int isStringValid (char *str1, char *str2) {
 	return 1;
 }
 
-int getSkew (char *str1, char *str2, int type) {
+int getTypeSkew (char *str1, char *str2, int type) {
 	int num = atoi(str2);
+	int max = 0, min = 0;
 	int i;
 	int val = 0;
 
@@ -158,6 +157,18 @@ int getSkew (char *str1, char *str2, int type) {
 		if (str1[i] == 'C' || str1[i] == 'c') {
 			val-=1;
 		}
+		if (max < val) {
+			max = val;
+		}
+		if (min > val) {
+			min = val;
+		}
+	}
+	if (type == 2) {
+		return max;
+	}
+	if (type == 1) {
+		return min;
 	}
 	return val;
 }
